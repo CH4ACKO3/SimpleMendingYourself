@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Simple Mending Yourself</name>
+	<author>CH4AcKO3</author>
+	<packageId>CH4AcKO3.SimpleMendingYourself</packageId>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<description>Allows pawns to mend their own worn apparel and equipped weapons at a Simple Mending's bench.</description>
+	<modDependencies>
+		<li>
+			<packageId>ludeon.rimworld</packageId>
+			<displayName>RimWorld</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/294100</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>ComfyCuddles.WithEuterpe</packageId>
+			<displayName>Simple Mending</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/3657705987</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>ludeon.rimworld</li>
+		<li>ComfyCuddles.WithEuterpe</li>
+	</loadAfter>
+</ModMetaData>

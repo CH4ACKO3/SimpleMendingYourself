@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<!-- Mod name -->
+	<SMY_ModName>Mend Yourself</SMY_ModName>
+
+	<!-- Mod settings -->
+	<SMY_UpperThreshold>Upper HP threshold: {0} (items above this HP% will not be mended)</SMY_UpperThreshold>
+	<SMY_LowerThreshold>Lower HP threshold: {0} (items below this HP% will not be mended)</SMY_LowerThreshold>
+	<SMY_MinLaborSpeed>Minimum labor speed: {0} (slower pawns are clamped to this speed for mending)</SMY_MinLaborSpeed>
+
+	<!-- Fail reasons -->
+	<SMY_PawnNotAllowed>This pawn is not allowed to self-mend at this bench</SMY_PawnNotAllowed>
+	<SMY_NoItemsToMend>No worn items meet the mending conditions</SMY_NoItemsToMend>
+
+	<!-- Pawn filter tab -->
+	<SMY_PawnFilterTab>Pawns</SMY_PawnFilterTab>
+	<SMY_AllowedPawns>Allowed to self-mend at this bench:</SMY_AllowedPawns>
+	<SMY_SelectAll>Select all</SMY_SelectAll>
+	<SMY_SelectNone>Select none</SMY_SelectNone>
+</LanguageData>

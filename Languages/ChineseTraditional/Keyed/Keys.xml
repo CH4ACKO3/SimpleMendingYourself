@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<SMY_ModName>自我修補</SMY_ModName>
+	<SMY_UpperThreshold>耐久度上限：{0}（高於此值的裝備不會被修補，防止pawn頻繁停下來修補輕微磨損的裝備）</SMY_UpperThreshold>
+	<SMY_LowerThreshold>耐久度下限：{0}（低於此值的裝備不會被修補，防止修補嚴重損壞的裝備造成不平衡）</SMY_LowerThreshold>
+	<SMY_MinLaborSpeed>最低工作速度：{0}（工作速度低於此值的pawn將以此速度計算修補時長）</SMY_MinLaborSpeed>
+	<SMY_PawnNotAllowed>該成員未被允許在此修補台進行自我修補</SMY_PawnNotAllowed>
+	<SMY_NoItemsToMend>身上沒有滿足修補條件的裝備</SMY_NoItemsToMend>
+	<SMY_PawnFilterTab>成員</SMY_PawnFilterTab>
+	<SMY_AllowedPawns>允許在此台自我修補的成員：</SMY_AllowedPawns>
+	<SMY_SelectAll>全選</SMY_SelectAll>
+	<SMY_SelectNone>全不選</SMY_SelectNone>
+</LanguageData>

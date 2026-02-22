@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<WorkGiverDef>
+		<defName>SMY_MendSelf</defName>
+		<label>mend own equipment</label>
+		<giverClass>SimpleMendingYourself.WorkGiver_MendSelf</giverClass>
+		<workType>BasicWorker</workType>
+		<priorityInType>10</priorityInType>
+		<verb>mend own equipment at</verb>
+		<gerund>mending own equipment at</gerund>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+</Defs>

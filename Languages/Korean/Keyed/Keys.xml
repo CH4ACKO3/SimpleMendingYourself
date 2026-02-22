@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<SMY_ModName>자가 수선</SMY_ModName>
+	<SMY_UpperThreshold>수선 HP 상한: {0} (이 이상 HP인 장비는 수선하지 않음)</SMY_UpperThreshold>
+	<SMY_LowerThreshold>수선 HP 하한: {0} (이 이하 HP인 장비는 수선하지 않음)</SMY_LowerThreshold>
+	<SMY_MinLaborSpeed>최소 노동 속도: {0} (이보다 느린 폰은 이 속도로 계산됩니다)</SMY_MinLaborSpeed>
+	<SMY_PawnNotAllowed>이 폰은 이 작업대에서의 자가 수선이 허용되지 않습니다</SMY_PawnNotAllowed>
+	<SMY_NoItemsToMend>수선 조건을 충족하는 장비가 없습니다</SMY_NoItemsToMend>
+	<SMY_PawnFilterTab>폰</SMY_PawnFilterTab>
+	<SMY_AllowedPawns>이 작업대에서 자가 수선 가능한 폰:</SMY_AllowedPawns>
+	<SMY_SelectAll>전체 선택</SMY_SelectAll>
+	<SMY_SelectNone>전체 해제</SMY_SelectNone>
+</LanguageData>

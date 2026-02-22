@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<SMY_ModName>Selbstreparatur</SMY_ModName>
+	<SMY_UpperThreshold>Obere HP-Schwelle: {0} (Ausrüstung darüber wird nicht repariert)</SMY_UpperThreshold>
+	<SMY_LowerThreshold>Untere HP-Schwelle: {0} (Ausrüstung darunter wird nicht repariert)</SMY_LowerThreshold>
+	<SMY_MinLaborSpeed>Mindestarbeitsgeschwindigkeit: {0} (langsamere Pawns verwenden diesen Wert)</SMY_MinLaborSpeed>
+	<SMY_PawnNotAllowed>Dieser Pawn darf sich an dieser Werkbank nicht selbst reparieren</SMY_PawnNotAllowed>
+	<SMY_NoItemsToMend>Keine Ausrüstung erfüllt die Reparaturbedingungen</SMY_NoItemsToMend>
+	<SMY_PawnFilterTab>Pawns</SMY_PawnFilterTab>
+	<SMY_AllowedPawns>Zur Selbstreparatur an dieser Werkbank berechtigte Pawns:</SMY_AllowedPawns>
+	<SMY_SelectAll>Alle auswählen</SMY_SelectAll>
+	<SMY_SelectNone>Alle abwählen</SMY_SelectNone>
+</LanguageData>

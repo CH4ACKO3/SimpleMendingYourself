@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<!-- 在修补台base def的inspectorTabs中添加pawn过滤tab（base def中声明，child def继承） -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[@Name="SEX_RepairBenchBase"]/inspectorTabs</xpath>
+		<value>
+			<li>SimpleMendingYourself.ITab_SelfMendPawnFilter</li>
+		</value>
+	</Operation>
+
+	<!-- 在每个具体修补台def的comps中添加pawn过滤comp（child def各自声明comps，需分别patch） -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="SEX_HandRepairBench"]/comps</xpath>
+		<value>
+			<li Class="SimpleMendingYourself.CompProperties_SelfMendPawnFilter"/>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="SEX_ElectricRepairBench"]/comps</xpath>
+		<value>
+			<li Class="SimpleMendingYourself.CompProperties_SelfMendPawnFilter"/>
+		</value>
+	</Operation>
+</Patch>

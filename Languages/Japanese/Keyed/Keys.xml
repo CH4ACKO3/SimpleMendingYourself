@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<SMY_ModName>自己修繕</SMY_ModName>
+	<SMY_UpperThreshold>修繕HP上限: {0}（この値より高い装備は修繕しない）</SMY_UpperThreshold>
+	<SMY_LowerThreshold>修繕HP下限: {0}（この値より低い装備は修繕しない）</SMY_LowerThreshold>
+	<SMY_MinLaborSpeed>最低労働速度: {0}（これより遅いポーンはこの速度で計算されます）</SMY_MinLaborSpeed>
+	<SMY_PawnNotAllowed>このポーンはこの作業台での自己修繕が許可されていません</SMY_PawnNotAllowed>
+	<SMY_NoItemsToMend>修繕条件を満たす装備がありません</SMY_NoItemsToMend>
+	<SMY_PawnFilterTab>メンバー</SMY_PawnFilterTab>
+	<SMY_AllowedPawns>この作業台で自己修繕できるメンバー:</SMY_AllowedPawns>
+	<SMY_SelectAll>全て選択</SMY_SelectAll>
+	<SMY_SelectNone>全て解除</SMY_SelectNone>
+</LanguageData>
