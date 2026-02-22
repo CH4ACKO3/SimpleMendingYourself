@@ -1,4 +1,4 @@
-# Mend Yourself
+# Simple Mending Yourself
 
 A RimWorld 1.6 addon for [Simple Mending](https://steamcommunity.com/sharedfiles/filedetails/?id=3657705987) that lets pawns repair their own worn apparel and equipped weapons at a mending bench.
 
