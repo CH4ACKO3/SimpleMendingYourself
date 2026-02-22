@@ -7,6 +7,7 @@
 	<SMY_UpperThreshold>耐久度上限：{0}（高于此值的装备不会被修补，防止pawn频繁修补轻微磨损的装备）</SMY_UpperThreshold>
 	<SMY_LowerThreshold>耐久度下限：{0}（低于此值的装备无法被自我修补）</SMY_LowerThreshold>
 	<SMY_MinLaborSpeed>最低工作速度：{0}（工作速度低于此值的pawn将以此速度计算修补时长）</SMY_MinLaborSpeed>
+	<SMY_SpeedMultiplier>修补速度倍率：{0}（对有效工作速度的乘数，影响修补所需时长）</SMY_SpeedMultiplier>
 
 	<!-- 失败原因 -->
 	<SMY_PawnNotAllowed>该成员未被允许在此修补台进行自我修补</SMY_PawnNotAllowed>

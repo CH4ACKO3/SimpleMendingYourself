@@ -4,6 +4,7 @@
 	<SMY_UpperThreshold>수선 HP 상한: {0} (이 이상 HP인 장비는 수선하지 않음)</SMY_UpperThreshold>
 	<SMY_LowerThreshold>수선 HP 하한: {0} (이 이하 HP인 장비는 수선하지 않음)</SMY_LowerThreshold>
 	<SMY_MinLaborSpeed>최소 노동 속도: {0} (이보다 느린 폰은 이 속도로 계산됩니다)</SMY_MinLaborSpeed>
+	<SMY_SpeedMultiplier>수선 속도 배율: {0} (유효 노동 속도에 곱해져 수선 시간을 조절합니다)</SMY_SpeedMultiplier>
 	<SMY_PawnNotAllowed>이 폰은 이 작업대에서의 자가 수선이 허용되지 않습니다</SMY_PawnNotAllowed>
 	<SMY_NoItemsToMend>수선 조건을 충족하는 장비가 없습니다</SMY_NoItemsToMend>
 	<SMY_PawnFilterTab>폰</SMY_PawnFilterTab>

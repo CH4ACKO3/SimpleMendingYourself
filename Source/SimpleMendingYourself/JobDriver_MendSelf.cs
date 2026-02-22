@@ -54,9 +54,9 @@ namespace SimpleMendingYourself
 
         private int CalculateMendDuration()
         {
-            // 速度 = 0.5 * max(GeneralLaborSpeed, minLaborSpeed)
+            // 速度 = speedMultiplier * max(GeneralLaborSpeed, minLaborSpeed)
             float laborSpeed = pawn.GetStatValue(StatDefOf.GeneralLaborSpeed);
-            float effectiveSpeed = Mathf.Max(laborSpeed, MendSelfMod.Settings.minLaborSpeed) * 0.5f;
+            float effectiveSpeed = Mathf.Max(laborSpeed, MendSelfMod.Settings.minLaborSpeed) * MendSelfMod.Settings.speedMultiplier;
             int duration = Mathf.CeilToInt(RepairUtilities.RepairDurationTicks / effectiveSpeed);
 
             CompPowerTrader power = Bench?.TryGetComp<CompPowerTrader>();

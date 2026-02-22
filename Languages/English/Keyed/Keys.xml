@@ -7,6 +7,7 @@
 	<SMY_UpperThreshold>Upper HP threshold: {0} (items above this HP% will not be mended)</SMY_UpperThreshold>
 	<SMY_LowerThreshold>Lower HP threshold: {0} (items below this HP% will not be mended)</SMY_LowerThreshold>
 	<SMY_MinLaborSpeed>Minimum labor speed: {0} (slower pawns are clamped to this speed for mending)</SMY_MinLaborSpeed>
+	<SMY_SpeedMultiplier>Mending speed multiplier: {0} (scales the effective labor speed used to calculate mending duration)</SMY_SpeedMultiplier>
 
 	<!-- Fail reasons -->
 	<SMY_PawnNotAllowed>This pawn is not allowed to self-mend at this bench</SMY_PawnNotAllowed>

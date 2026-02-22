@@ -4,6 +4,7 @@
 	<SMY_UpperThreshold>Верхний порог прочности: {0} (снаряжение выше этого значения не чинится)</SMY_UpperThreshold>
 	<SMY_LowerThreshold>Нижний порог прочности: {0} (снаряжение ниже этого значения не чинится)</SMY_LowerThreshold>
 	<SMY_MinLaborSpeed>Минимальная скорость труда: {0} (более медленные пешки используют это значение)</SMY_MinLaborSpeed>
+	<SMY_SpeedMultiplier>Множитель скорости починки: {0} (масштабирует эффективную скорость труда для расчёта длительности починки)</SMY_SpeedMultiplier>
 	<SMY_PawnNotAllowed>Этому пешке не разрешена самопочинка на этом верстаке</SMY_PawnNotAllowed>
 	<SMY_NoItemsToMend>Нет снаряжения, удовлетворяющего условиям починки</SMY_NoItemsToMend>
 	<SMY_PawnFilterTab>Пешки</SMY_PawnFilterTab>

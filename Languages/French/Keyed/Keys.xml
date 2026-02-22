@@ -4,6 +4,7 @@
 	<SMY_UpperThreshold>Seuil HP supérieur: {0} (les objets au-dessus ne seront pas raccommodés)</SMY_UpperThreshold>
 	<SMY_LowerThreshold>Seuil HP inférieur: {0} (les objets en-dessous ne seront pas raccommodés)</SMY_LowerThreshold>
 	<SMY_MinLaborSpeed>Vitesse de travail minimale: {0} (les colons plus lents utilisent cette valeur)</SMY_MinLaborSpeed>
+	<SMY_SpeedMultiplier>Multiplicateur de vitesse de raccommodage: {0} (modifie la vitesse effective pour calculer la durée)</SMY_SpeedMultiplier>
 	<SMY_PawnNotAllowed>Ce colon n'est pas autorisé à se raccommoder à cet établi</SMY_PawnNotAllowed>
 	<SMY_NoItemsToMend>Aucun équipement ne remplit les conditions de raccommodage</SMY_NoItemsToMend>
 	<SMY_PawnFilterTab>Colons</SMY_PawnFilterTab>

@@ -4,6 +4,7 @@
 	<SMY_UpperThreshold>耐久度上限：{0}（高於此值的裝備不會被修補，防止pawn頻繁停下來修補輕微磨損的裝備）</SMY_UpperThreshold>
 	<SMY_LowerThreshold>耐久度下限：{0}（低於此值的裝備不會被修補，防止修補嚴重損壞的裝備造成不平衡）</SMY_LowerThreshold>
 	<SMY_MinLaborSpeed>最低工作速度：{0}（工作速度低於此值的pawn將以此速度計算修補時長）</SMY_MinLaborSpeed>
+	<SMY_SpeedMultiplier>修補速度倍率：{0}（對有效工作速度的乘數，影響修補所需時長）</SMY_SpeedMultiplier>
 	<SMY_PawnNotAllowed>該成員未被允許在此修補台進行自我修補</SMY_PawnNotAllowed>
 	<SMY_NoItemsToMend>身上沒有滿足修補條件的裝備</SMY_NoItemsToMend>
 	<SMY_PawnFilterTab>成員</SMY_PawnFilterTab>

@@ -16,12 +16,14 @@ namespace SimpleMendingYourself
         public float mendThresholdUpper = 0.8f;
         public float mendThresholdLower = 0.2f;
         public float minLaborSpeed = 1.0f;
+        public float speedMultiplier = 0.5f;
 
         public override void ExposeData()
         {
             Scribe_Values.Look(ref mendThresholdUpper, "mendThresholdUpper", 0.8f);
             Scribe_Values.Look(ref mendThresholdLower, "mendThresholdLower", 0.2f);
             Scribe_Values.Look(ref minLaborSpeed, "minLaborSpeed", 1.0f);
+            Scribe_Values.Look(ref speedMultiplier, "speedMultiplier", 0.5f);
             base.ExposeData();
         }
     }
@@ -48,6 +50,9 @@ namespace SimpleMendingYourself
 
             listing.Label("SMY_MinLaborSpeed".Translate(Settings.minLaborSpeed.ToStringPercent("F0")));
             Settings.minLaborSpeed = listing.Slider(Settings.minLaborSpeed, 0f, 2f);
+
+            listing.Label("SMY_SpeedMultiplier".Translate(Settings.speedMultiplier.ToStringPercent("F0")));
+            Settings.speedMultiplier = listing.Slider(Settings.speedMultiplier, 0.1f, 2f);
 
             listing.End();
         }
