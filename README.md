@@ -6,7 +6,7 @@ A RimWorld 1.6 addon for [Simple Mending](https://steamcommunity.com/sharedfiles
 
 Pawns with the **Basics** work type enabled will automatically go to a Simple Mending bench and repair their own equipment when it falls within the configured HP% range. The pawn fetches the required repair materials from the map, brings them to the bench, and performs the repair — no need to haul the item itself.
 
-- Repair duration: **50% of Simple Mending's normal duration** (with a configurable minimum floor)
+- Repair duration: Uses Simple Mending's repair calculation, with a configurable speed multiplier (default 50%, meaning 2x duration)
 - Repair cost: same as Simple Mending (25% of item's material cost)
 - Both apparel and primary weapons are supported
 
@@ -16,7 +16,7 @@ Access via Options → Mod Settings → Mend Yourself:
 
 - **Upper HP threshold** (default 80%): Pawn won't mend items above this — prevents constant upkeep of barely-worn gear
 - **Lower HP threshold** (default 20%): Pawn won't mend items below this — balance adjustment to discourage repairing nearly-destroyed gear
-- **Minimum mend duration** (default 300 ticks): Floor for repair work time regardless of labor speed
+- **Speed multiplier** (default 50%): Adjusts repair speed relative to Simple Mending's base duration — 50% means 2x slower, 200% means 2x faster
 
 ## Requirements
 

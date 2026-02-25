@@ -30,7 +30,7 @@ namespace SimpleMendingYourself
             Toil doWork = new Toil
             {
                 defaultCompleteMode = ToilCompleteMode.Delay,
-                defaultDuration = CalculateMendDuration()
+                defaultDuration = Mathf.CeilToInt(RepairUtilities.CalculateRepairDuration(pawn, Bench) / MendSelfMod.Settings.speedMultiplier)
             };
             doWork.WithProgressBarToilDelay(TargetIndex.A);
             doWork.handlingFacing = true;
@@ -50,20 +50,6 @@ namespace SimpleMendingYourself
                         RepairUtilities.RepairItem(item);
                 }
             };
-        }
-
-        private int CalculateMendDuration()
-        {
-            // 速度 = speedMultiplier * max(GeneralLaborSpeed, minLaborSpeed)
-            float laborSpeed = pawn.GetStatValue(StatDefOf.GeneralLaborSpeed);
-            float effectiveSpeed = Mathf.Max(laborSpeed, MendSelfMod.Settings.minLaborSpeed) * MendSelfMod.Settings.speedMultiplier;
-            int duration = Mathf.CeilToInt(RepairUtilities.RepairDurationTicks / effectiveSpeed);
-
-            CompPowerTrader power = Bench?.TryGetComp<CompPowerTrader>();
-            if (power != null && !power.PowerOn)
-                duration *= 2;
-
-            return duration;
         }
     }
 }

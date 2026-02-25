@@ -14,9 +14,12 @@ namespace SimpleMendingYourself
 
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn)
         {
-            foreach (Thing thing in pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial))
-                if (thing.TryGetComp<CompRepairAssignment>() != null)
-                    yield return thing;
+            MapComponent_RepairBenchCache cache = pawn.Map.GetComponent<MapComponent_RepairBenchCache>();
+            if (cache != null)
+            {
+                foreach (Building bench in cache.GetRepairBenches())
+                    yield return bench;
+            }
         }
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)

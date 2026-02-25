@@ -13,12 +13,14 @@
 		<xpath>Defs/ThingDef[defName="SEX_HandRepairBench"]/comps</xpath>
 		<value>
 			<li Class="SimpleMendingYourself.CompProperties_SelfMendPawnFilter"/>
+			<li Class="SimpleMendingYourself.CompProperties_RepairBenchCacheNotifier"/>
 		</value>
 	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/ThingDef[defName="SEX_ElectricRepairBench"]/comps</xpath>
 		<value>
 			<li Class="SimpleMendingYourself.CompProperties_SelfMendPawnFilter"/>
+			<li Class="SimpleMendingYourself.CompProperties_RepairBenchCacheNotifier"/>
 		</value>
 	</Operation>
 </Patch>
