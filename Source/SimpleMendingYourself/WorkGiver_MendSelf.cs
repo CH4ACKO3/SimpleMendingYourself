@@ -32,10 +32,20 @@ namespace SimpleMendingYourself
                 foreach (Apparel apparel in pawn.apparel.WornApparel)
                     if (QuickIsValidTarget(apparel, settings))
                         return false;
-            if (pawn.equipment != null)
-                foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
+
+            if (SimpleSidearmsCompat.Active)
+            {
+                foreach (ThingWithComps weapon in SimpleSidearmsCompat.GetRegisteredWeapons(pawn))
                     if (QuickIsValidTarget(weapon, settings))
                         return false;
+            }
+            else
+            {
+                if (pawn.equipment != null)
+                    foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
+                        if (QuickIsValidTarget(weapon, settings))
+                            return false;
+            }
             return true;
         }
 
@@ -117,10 +127,22 @@ namespace SimpleMendingYourself
                 foreach (Apparel apparel in pawn.apparel.WornApparel)
                     if (IsValidMendTarget(apparel, comp, settings))
                         yield return apparel;
-            if (pawn.equipment != null)
-                foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
+
+            if (SimpleSidearmsCompat.Active)
+            {
+                // 有SimpleSidearms：装备栏和背包均只取rememberedWeapons中的武器，排除临时武器
+                foreach (ThingWithComps weapon in SimpleSidearmsCompat.GetRegisteredWeapons(pawn))
                     if (IsValidMendTarget(weapon, comp, settings))
                         yield return weapon;
+            }
+            else
+            {
+                // 无SimpleSidearms：只取装备栏
+                if (pawn.equipment != null)
+                    foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
+                        if (IsValidMendTarget(weapon, comp, settings))
+                            yield return weapon;
+            }
         }
 
         // 预检版本：不依赖台的filter，用于ShouldSkip
