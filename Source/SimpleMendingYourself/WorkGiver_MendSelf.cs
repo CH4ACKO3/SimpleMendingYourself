@@ -88,7 +88,7 @@ namespace SimpleMendingYourself
             foreach (Thing item in CandidateItems(pawn, repairComp))
             {
                 foundCandidate = true;
-                if (!RepairUtilities.TryGetRepairCostOnMap(item, pawn.Map, out Thing costThing, out int count))
+                if (!RepairUtilities.TryGetRepairCostOnMap(item, pawn, pawn.Map, out Thing costThing, out int count))
                 {
                     if (forced && firstFailItem == null) firstFailItem = item;
                     continue;

@@ -19,7 +19,7 @@
 			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="ComfyCuddlesWithEuterpe">
-			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\workshop\content\294100\3657705987\1.6\Assemblies\ComfyCuddlesWithEuterpe.dll</HintPath>
+		  <HintPath>..\..\..\..\..\..\App\Steam\steamapps\workshop\content\294100\3657705987\1.6\Assemblies\ComfyCuddlesWithEuterpe.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
 			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -34,6 +34,19 @@
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDir)\Assemblies\" />
+	</Target>
+
+	<Target Name="DeployRelease" AfterTargets="PostBuild">
+		<PropertyGroup>
+			<DeployDir>D:\App\Steam\steamapps\common\RimWorld\Mods\SimpleMendingYourself\</DeployDir>
+		</PropertyGroup>
+		<RemoveDir Directories="$(DeployDir)" />
+		<ItemGroup>
+			<ReleaseFiles Include="$(ModDir)**\*"
+				Exclude="$(ModDir)Source\**;$(ModDir).git\**;$(ModDir).idea\**;$(ModDir).gitignore;$(ModDir)**\.gitkeep" />
+		</ItemGroup>
+		<Copy SourceFiles="@(ReleaseFiles)"
+			DestinationFiles="@(ReleaseFiles->'$(DeployDir)%(RecursiveDir)%(Filename)%(Extension)')" />
 	</Target>
 
 </Project>
