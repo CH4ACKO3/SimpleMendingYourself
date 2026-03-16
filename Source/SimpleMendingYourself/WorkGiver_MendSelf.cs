@@ -88,19 +88,38 @@ namespace SimpleMendingYourself
             foreach (Thing item in CandidateItems(pawn, repairComp))
             {
                 foundCandidate = true;
-                if (!RepairUtilities.TryGetRepairCostOnMap(item, pawn, pawn.Map, out Thing costThing, out int count))
+                if (!RepairUtilities.TryGetRepairCost(item, pawn, pawn.Map, out List<ThingCount> chosenItems)
+                    || chosenItems.Count == 0)
                 {
                     if (forced && firstFailItem == null) firstFailItem = item;
                     continue;
                 }
-                if (!pawn.CanReserve(costThing, 1, count))
+                bool canReserveAllIngredients = true;
+                foreach (ThingCount chosen in chosenItems)
+                {
+                    if (chosen.Thing == null || chosen.Thing.Destroyed || !pawn.CanReserve(chosen.Thing, 1, chosen.Count))
+                    {
+                        canReserveAllIngredients = false;
+                        break;
+                    }
+                }
+                if (!canReserveAllIngredients)
                 {
                     if (forced && firstFailItem == null) firstFailItem = item;
                     continue;
                 }
 
-                job = JobMaker.MakeJob(MendSelfDefOf.SMY_MendSelf, bench, costThing, item);
-                job.count = count;
+                job = JobMaker.MakeJob(MendSelfDefOf.SMY_MendSelf);
+                job.targetA = item;
+                job.targetC = bench;
+                job.targetQueueB = new List<LocalTargetInfo>();
+                job.countQueue = new List<int>();
+                foreach (ThingCount chosen in chosenItems)
+                {
+                    job.targetQueueB.Add(chosen.Thing);
+                    job.countQueue.Add(chosen.Count);
+                }
+                job.count = 1;
                 return true;
             }
 

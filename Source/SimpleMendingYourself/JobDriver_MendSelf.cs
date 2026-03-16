@@ -9,32 +9,56 @@ namespace SimpleMendingYourself
 {
     public class JobDriver_MendSelf : JobDriver
     {
-        private Thing Bench => job.GetTarget(TargetIndex.A).Thing;
-        private Thing CostItem => job.GetTarget(TargetIndex.B).Thing;
-        private Thing ItemToRepair => job.GetTarget(TargetIndex.C).Thing;
+        private List<Thing> ingredients = new List<Thing>();
+        private Thing Bench => job.GetTarget(TargetIndex.C).Thing;
+        private Thing ItemToRepair => job.GetTarget(TargetIndex.A).Thing;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
-            => pawn.Reserve(Bench, job, 1, -1, null, errorOnFailed)
-            && pawn.Reserve(CostItem, job, 1, job.count, null, errorOnFailed);
+        {
+            if (!pawn.Reserve(Bench, job, 1, -1, null, errorOnFailed))
+                return false;
+
+            List<LocalTargetInfo> targets = job.GetTargetQueue(TargetIndex.B);
+            if (targets == null || targets.Count == 0)
+                return false;
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                int count = (job.countQueue != null && i < job.countQueue.Count) ? job.countQueue[i] : 1;
+                if (!pawn.Reserve(targets[i], job, 1, count, null, errorOnFailed))
+                    return false;
+            }
+
+            return true;
+        }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
-            this.FailOnBurningImmobile(TargetIndex.A);
+            Thing bench = Bench;
+            Thing itemToRepair = ItemToRepair;
 
-            yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch);
-            yield return Toils_Haul.StartCarryThing(TargetIndex.B);
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
-            yield return Toils_Haul.PlaceHauledThingInCell(TargetIndex.A, null, storageMode: true);
+            this.FailOn(() => bench == null || bench.Destroyed || bench.IsForbidden(pawn));
+            this.FailOn(() => itemToRepair == null || itemToRepair.Destroyed);
+
+            foreach (Toil ingredientToil in JobDriver_DoBill.CollectIngredientsToils(TargetIndex.B, TargetIndex.C, TargetIndex.C))
+            {
+                ingredientToil.AddFinishAction(() =>
+                {
+                    Thing carriedThing = ingredientToil.actor.carryTracker.CarriedThing;
+                    if (carriedThing != null)
+                        ingredients.Add(carriedThing);
+                });
+                yield return ingredientToil;
+            }
 
             Toil doWork = new Toil
             {
                 defaultCompleteMode = ToilCompleteMode.Delay,
-                defaultDuration = Mathf.CeilToInt(RepairUtilities.CalculateRepairDuration(pawn, Bench) / MendSelfMod.Settings.speedMultiplier)
+                defaultDuration = Mathf.CeilToInt(RepairUtilities.CalculateRepairDuration(pawn, bench) / MendSelfMod.Settings.speedMultiplier)
             };
-            doWork.WithProgressBarToilDelay(TargetIndex.A);
+            doWork.WithProgressBarToilDelay(TargetIndex.C);
             doWork.handlingFacing = true;
-            doWork.tickAction = () => pawn.rotationTracker.FaceTarget(Bench);
+            doWork.tickAction = () => pawn.rotationTracker.FaceTarget(bench);
             yield return doWork;
 
             // 独立 toil：只有 doWork 自然完成后才执行，中断则跳过
@@ -43,13 +67,19 @@ namespace SimpleMendingYourself
                 defaultCompleteMode = ToilCompleteMode.Instant,
                 initAction = () =>
                 {
-                    if (CostItem != null && !CostItem.Destroyed)
-                        CostItem.Destroy();
-                    Thing item = ItemToRepair;
-                    if (item != null && !item.Destroyed)
-                        RepairUtilities.RepairItem(item);
+                    Thing item = itemToRepair;
+                    if (item == null || item.Destroyed)
+                        return;
+                    RepairUtilities.ConsumeIngredients(ingredients);
+                    RepairUtilities.RepairItem(item);
                 }
             };
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Collections.Look(ref ingredients, "ingredients", LookMode.Reference);
         }
     }
 }
