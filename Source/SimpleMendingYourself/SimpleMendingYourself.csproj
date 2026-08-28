@@ -36,7 +36,7 @@
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDir)\Assemblies\" />
 	</Target>
 
-	<Target Name="DeployRelease" AfterTargets="PostBuild">
+	<Target Name="DeployRelease" AfterTargets="PostBuild" Condition="'$(DeployToGame)' == 'true'">
 		<PropertyGroup>
 			<DeployDir>D:\App\Steam\steamapps\common\RimWorld\Mods\SimpleMendingYourself\</DeployDir>
 		</PropertyGroup>

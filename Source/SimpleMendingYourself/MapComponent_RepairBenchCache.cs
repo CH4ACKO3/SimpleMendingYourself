@@ -6,8 +6,8 @@ namespace SimpleMendingYourself
 {
     public class MapComponent_RepairBenchCache : MapComponent
     {
-        private HashSet<Building> cachedRepairBenches = new HashSet<Building>();
-        private bool initialized = false;
+        private readonly HashSet<Building> cachedRepairBenches = new HashSet<Building>();
+        private bool initialized;
 
         public MapComponent_RepairBenchCache(Map map) : base(map)
         {
@@ -17,28 +17,18 @@ namespace SimpleMendingYourself
         {
             base.ExposeData();
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
-            {
                 initialized = false;
-            }
         }
 
         public override void FinalizeInit()
         {
             base.FinalizeInit();
-            if (!initialized)
-            {
-                RebuildCache();
-                initialized = true;
-            }
+            EnsureInitialized();
         }
 
         public IEnumerable<Building> GetRepairBenches()
         {
-            if (!initialized)
-            {
-                RebuildCache();
-                initialized = true;
-            }
+            EnsureInitialized();
             return cachedRepairBenches;
         }
 
@@ -62,12 +52,17 @@ namespace SimpleMendingYourself
         {
             cachedRepairBenches.Clear();
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial))
-            {
                 if (thing is Building building && thing.TryGetComp<CompRepairAssignment>() != null)
-                {
                     cachedRepairBenches.Add(building);
-                }
-            }
+        }
+
+        private void EnsureInitialized()
+        {
+            if (initialized)
+                return;
+
+            RebuildCache();
+            initialized = true;
         }
     }
 
@@ -85,20 +80,14 @@ namespace SimpleMendingYourself
         {
             base.PostSpawnSetup(respawningAfterLoad);
             if (parent is Building building && parent.Map != null && parent.TryGetComp<CompRepairAssignment>() != null)
-            {
-                MapComponent_RepairBenchCache cache = parent.Map.GetComponent<MapComponent_RepairBenchCache>();
-                cache?.Register(building);
-            }
+                parent.Map.GetComponent<MapComponent_RepairBenchCache>()?.Register(building);
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
             if (parent is Building building && map != null)
-            {
-                MapComponent_RepairBenchCache cache = map.GetComponent<MapComponent_RepairBenchCache>();
-                cache?.Unregister(building);
-            }
+                map.GetComponent<MapComponent_RepairBenchCache>()?.Unregister(building);
         }
     }
 }

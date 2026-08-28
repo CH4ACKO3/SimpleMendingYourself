@@ -25,8 +25,11 @@ Access via Options → Mod Settings → Mend Yourself:
 
 ## Building
 
-1. Open `Source/MendYourself.sln` in Visual Studio or Rider
+1. Open `Source/SimpleMendingYourself.sln` in Visual Studio or Rider
 2. Build the project — the DLL is copied to `Assemblies/` automatically
+
+To also copy the built mod into the local RimWorld installation, build with
+`-p:DeployToGame=true`.
 
 ## License
 

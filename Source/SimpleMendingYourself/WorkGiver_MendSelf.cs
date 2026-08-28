@@ -28,24 +28,10 @@ namespace SimpleMendingYourself
                 return false;
 
             MendSelfSettings settings = MendSelfMod.Settings;
-            if (pawn.apparel != null)
-                foreach (Apparel apparel in pawn.apparel.WornApparel)
-                    if (QuickIsValidTarget(apparel, settings))
-                        return false;
+            foreach (Thing item in MendableItems(pawn))
+                if (QuickIsValidTarget(item, settings))
+                    return false;
 
-            if (SimpleSidearmsCompat.Active)
-            {
-                foreach (ThingWithComps weapon in SimpleSidearmsCompat.GetRegisteredWeapons(pawn))
-                    if (QuickIsValidTarget(weapon, settings))
-                        return false;
-            }
-            else
-            {
-                if (pawn.equipment != null)
-                    foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
-                        if (QuickIsValidTarget(weapon, settings))
-                            return false;
-            }
             return true;
         }
 
@@ -81,7 +67,7 @@ namespace SimpleMendingYourself
                 return false;
             }
 
-            // 逐个遍历候选物品，跳过材料不足或无法预订的，找到第一个可行的
+            // Skip candidates with unavailable materials and use the first viable one.
             bool foundCandidate = false;
             Thing firstFailItem = null;
 
@@ -138,50 +124,52 @@ namespace SimpleMendingYourself
             return false;
         }
 
-        // 枚举所有通过filter的候选物品（不含材料检查，让TryCreateJob逐个尝试）
         private IEnumerable<Thing> CandidateItems(Pawn pawn, CompRepairAssignment comp)
         {
             MendSelfSettings settings = MendSelfMod.Settings;
+            foreach (Thing item in MendableItems(pawn))
+                if (IsValidMendTarget(item, comp, settings))
+                    yield return item;
+        }
+
+        private static IEnumerable<Thing> MendableItems(Pawn pawn)
+        {
             if (pawn.apparel != null)
                 foreach (Apparel apparel in pawn.apparel.WornApparel)
-                    if (IsValidMendTarget(apparel, comp, settings))
-                        yield return apparel;
+                    yield return apparel;
 
             if (SimpleSidearmsCompat.Active)
             {
-                // 有SimpleSidearms：装备栏和背包均只取rememberedWeapons中的武器，排除临时武器
                 foreach (ThingWithComps weapon in SimpleSidearmsCompat.GetRegisteredWeapons(pawn))
-                    if (IsValidMendTarget(weapon, comp, settings))
-                        yield return weapon;
+                    yield return weapon;
             }
-            else
+            else if (pawn.equipment != null)
             {
-                // 无SimpleSidearms：只取装备栏
-                if (pawn.equipment != null)
-                    foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
-                        if (IsValidMendTarget(weapon, comp, settings))
-                            yield return weapon;
+                foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
+                    yield return weapon;
             }
         }
 
-        // 预检版本：不依赖台的filter，用于ShouldSkip
         private static bool QuickIsValidTarget(Thing thing, MendSelfSettings settings)
         {
-            if (!RepairUtilities.IsValidRepairTarget(thing.def))
-                return false;
-            float hpFrac = (float)thing.HitPoints / thing.MaxHitPoints;
-            return hpFrac >= settings.mendThresholdLower && hpFrac <= settings.mendThresholdUpper;
+            return RepairUtilities.IsValidRepairTarget(thing.def)
+                && IsWithinConfiguredHpRange(thing, settings);
         }
 
-        // 完整检查：台的itemFilter（含台配置的HP%范围）和ingredientFilter，与mod设置HP%取交集
         private static bool IsValidMendTarget(Thing thing, CompRepairAssignment comp, MendSelfSettings settings)
         {
-            if (!comp.itemFilter.Allows(thing))
+            if (!comp.itemFilter.Allows(thing) || !IsWithinConfiguredHpRange(thing, settings))
                 return false;
-            float hpFrac = (float)thing.HitPoints / thing.MaxHitPoints;
-            if (hpFrac < settings.mendThresholdLower || hpFrac > settings.mendThresholdUpper)
-                return false;
-            return RepairUtilities.IsRepairCostAllowed(thing, comp.ingredientFilter);
+
+            var repairCost = RepairUtilities.CalculateRepairCost(thing);
+            return repairCost.HasValue
+                && RepairUtilities.IsRepairCostAllowed(repairCost.Value, comp.ingredientFilter);
+        }
+
+        private static bool IsWithinConfiguredHpRange(Thing thing, MendSelfSettings settings)
+        {
+            float hpFraction = (float)thing.HitPoints / thing.MaxHitPoints;
+            return hpFraction >= settings.mendThresholdLower && hpFraction <= settings.mendThresholdUpper;
         }
     }
 }
