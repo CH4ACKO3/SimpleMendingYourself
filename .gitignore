@@ -37,3 +37,6 @@ desktop.ini
 
 # Logs
 *.log
+
+# Generated CI release packages
+artifacts/

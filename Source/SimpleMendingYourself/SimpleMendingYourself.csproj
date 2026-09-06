@@ -11,28 +11,38 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<ModDir>$(SolutionDir)\..\</ModDir>
+		<ModDir>$(MSBuildProjectDirectory)\..\..\</ModDir>
+		<RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == ''">$(MSBuildProjectDirectory)\..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed</RimWorldManagedDir>
+		<SimpleMendingAssemblyPath Condition="'$(SimpleMendingAssemblyPath)' == ''">$(MSBuildProjectDirectory)\..\..\..\..\..\..\App\Steam\steamapps\workshop\content\294100\3657705987\1.6\Assemblies\ComfyCuddlesWithEuterpe.dll</SimpleMendingAssemblyPath>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<Reference Include="Assembly-CSharp">
-			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
-		</Reference>
+	<ItemGroup Condition="'$(UseReferencePackages)' == 'true'">
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" PrivateAssets="all" />
 		<Reference Include="ComfyCuddlesWithEuterpe">
-		  <HintPath>..\..\..\..\..\..\App\Steam\steamapps\workshop\content\294100\3657705987\1.6\Assemblies\ComfyCuddlesWithEuterpe.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.IMGUIModule">
-			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.TextRenderingModule">
-			<HintPath>..\..\..\..\..\..\App\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+			<HintPath>$(SimpleMendingAssemblyPath)</HintPath>
+			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<ItemGroup Condition="'$(UseReferencePackages)' != 'true'">
+		<Reference Include="Assembly-CSharp">
+			<HintPath>$(RimWorldManagedDir)\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="ComfyCuddlesWithEuterpe">
+		  <HintPath>$(SimpleMendingAssemblyPath)</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(RimWorldManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>$(RimWorldManagedDir)\UnityEngine.IMGUIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+			<HintPath>$(RimWorldManagedDir)\UnityEngine.TextRenderingModule.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SkipModCopy)' != 'true'">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDir)\Assemblies\" />
 	</Target>
 

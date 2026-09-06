@@ -31,6 +31,13 @@ Access via Options → Mod Settings → Mend Yourself:
 To also copy the built mod into the local RimWorld installation, build with
 `-p:DeployToGame=true`.
 
+CI builds are reproducible and do not require a local RimWorld installation. Run
+`./Tools/CI/Build.ps1` from PowerShell to validate XML and translations, fetch the
+pinned Simple Mending dependency, compile, and create a checksummed release package.
+
+Version tags create GitHub Releases. Steam Workshop publishing is separately gated;
+see `Docs/development/WorkshopAutomation.zh-CN.md` for the credential and safety setup.
+
 ## License
 
 MIT
