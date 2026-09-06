@@ -71,9 +71,30 @@ try {
         if ($exitCode -ne 0 -or $text -notmatch 'Waiting for user info\.\.\.\s*OK') {throw 'SteamCMD login check failed. Refresh Steam Guard locally; no Workshop content changed.'}
         Write-Host 'PASS: Steam login and Workshop ownership verified. No Workshop writes performed.';return
     }
-    if ($exitCode -ne 0 -or $text -notmatch '(?i)\bSuccess\.\s+(?:Published|Updated)[^\r\n]*\b3671535921\b') {
+    if ($exitCode -ne 0) {
         throw 'Steam did not confirm the Workshop update. Refresh authorization locally; raw authentication output is withheld.'
     }
+    $publishedVerified=$false
+    for ($attempt=1;$attempt -le 3 -and !$publishedVerified;$attempt++) {
+        Push-Location -LiteralPath $steam
+        try {
+            $downloadOutput=& (Join-Path $steam 'steamcmd.exe') '+@ShutdownOnFailedCommand' '1' '+login' 'anonymous' '+workshop_download_item' '294100' '3671535921' 'validate' '+quit' 2>&1
+            $downloadExit=$LASTEXITCODE
+        } finally {Pop-Location}
+        $download=Join-Path $steam 'steamapps/workshop/content/294100/3671535921'
+        if ($downloadExit -eq 0 -and (Test-Path -LiteralPath $download)) {
+            $publishedVerified=$true
+            foreach ($file in $m.files) {
+                $publishedPath=Join-Path $download $file.path
+                if (!(Test-Path -LiteralPath $publishedPath) -or (Get-FileHash $publishedPath).Hash -cne $file.sha256) {
+                    $publishedVerified=$false;break
+                }
+            }
+            if ($publishedVerified -and @(Get-ChildItem -LiteralPath $download -Recurse -File).Count -ne $m.files.Count) {$publishedVerified=$false}
+        }
+        if (!$publishedVerified -and $attempt -lt 3) {Start-Sleep -Seconds 5}
+    }
+    if (!$publishedVerified) {throw 'SteamCMD completed, but the published files did not match the release manifest after three checks.'}
     Write-Host "Steam confirmed Workshop item 3671535921 for $($m.tag)."
 } finally {
     if ($steam.StartsWith([IO.Path]::GetTempPath(),[StringComparison]::OrdinalIgnoreCase) -and
