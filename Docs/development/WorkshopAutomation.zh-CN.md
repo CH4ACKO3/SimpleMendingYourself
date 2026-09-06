@@ -12,4 +12,12 @@
 4. `STEAM_CONFIG_VDF_BASE64` 是完成 Steam Guard 登录后的 SteamCMD `config/config.vdf` 的 Base64 内容。
 5. 保持仓库变量 `STEAM_PUBLISH_ENABLED=false`，手动运行 Build and release，勾选 `verify_steam`。只读验证成功后再改为 `true`。
 
+首次配置还会在 `%LOCALAPPDATA%\Codex\SteamWorkshopPublisher\credentials.dpapi` 生成仅限当前 Windows 用户解密的凭证包。以后为同一账号拥有的其他模组仓库配置发布时，不必重新登录 Steam：
+
+```powershell
+./Tools/CI/Install-SteamEnvironment.ps1 -Repository owner/new-mod-repository
+```
+
+安装脚本会创建目标仓库的 `steam-workshop` 环境、写入同一组机密，并将目标仓库的发布开关初始化为 `false`。凭证包不能提交到 Git，也不要复制到不受信任的机器；Steam 密码或授权发生变化后，应重新生成它并更新各仓库。
+
 建议给 `steam-workshop` 环境配置审批保护。普通分支推送永远不会上传；实际发布前先更新版本和两份 `Docs/releases/<version>.*.md`，合并到 `main` 后再创建同版本标签。
