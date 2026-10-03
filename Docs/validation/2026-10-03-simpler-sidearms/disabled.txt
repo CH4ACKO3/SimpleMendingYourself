@@ -1,0 +1,6 @@
+Sidearms active=False
+PASS equipped weapon retained
+PASS inventory weapon follows integration state
+PASS medicine excluded
+PASS no duplicate candidates
+PASS damaged inventory weapon work admission

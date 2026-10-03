@@ -143,10 +143,14 @@ namespace SimpleMendingYourself
                 foreach (ThingWithComps weapon in SimpleSidearmsCompat.GetRegisteredWeapons(pawn))
                     yield return weapon;
             }
-            else if (pawn.equipment != null)
+            else
             {
-                foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
-                    yield return weapon;
+                if (pawn.equipment != null)
+                    foreach (ThingWithComps weapon in pawn.equipment.AllEquipmentListForReading)
+                        yield return weapon;
+                if (SimplerSidearmsCompat.Active)
+                    foreach (ThingWithComps weapon in SimplerSidearmsCompat.InventoryWeapons(pawn))
+                        yield return weapon;
             }
         }
 

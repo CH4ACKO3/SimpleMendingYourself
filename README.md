@@ -9,6 +9,7 @@ Pawns with the **Basics** work type enabled will automatically go to a Simple Me
 - Repair duration: Uses Simple Mending's repair calculation, with a configurable speed multiplier (default 50%, meaning 2x duration)
 - Repair cost: same as Simple Mending (25% of item's material cost)
 - Both apparel and primary weapons are supported
+- With Simpler Sidearms, eligible weapons in the pawn's inventory are also repaired, including temporarily carried weapons. Bench filters and HP thresholds still apply. Simple Sidearms continues to use its registered-weapon list.
 
 ## Mod Settings
 

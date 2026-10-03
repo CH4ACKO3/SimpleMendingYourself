@@ -1,0 +1,14 @@
+Sidearms active=True
+PASS equipped weapon retained
+PASS inventory weapon follows integration state
+PASS medicine excluded
+PASS no duplicate candidates
+PASS damaged inventory weapon work admission
+PASS durability threshold enforced
+PASS bench item filter enforced
+PASS ingredient filter enforced
+PASS real job targets inventory sidearm
+JobFailReason=No worn items meet the mending conditions filter=True reserveBench=True reserveSteel=True cost=(Steel, 15)
+PASS actual repair completed
+PASS repair kept sidearm in inventory and primary equipped
+PASS actual material consumption matches job cost
