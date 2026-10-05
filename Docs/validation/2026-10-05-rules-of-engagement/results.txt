@@ -1,0 +1,22 @@
+Sidearms active=True
+PASS equipped weapon retained
+PASS stowed RoE sidearm uses equip-first workflow
+PASS RoE native offhand equip
+PASS equipped RoE offhand is repair candidate
+PASS medicine excluded
+PASS no duplicate candidates
+PASS damaged inventory weapon work admission
+PASS durability threshold enforced
+PASS bench item filter enforced
+PASS ingredient filter enforced
+PASS real job targets inventory sidearm
+JobFailReason=No worn items meet the mending conditions filter=True reserveBench=True reserveSteel=True cost=(Steel, 15)
+PASS actual repair completed
+PASS repair retained both equipped weapons
+PASS RoE offhand identity retained
+PASS actual material consumption matches job cost
+PASS second repair created before tool restoration
+PASS RoE restores main weapon at job start
+PASS repair completed after target moved to inventory
+PASS restored kit retains repaired sidearm
+PASS restored-kit repair consumes exact materials
