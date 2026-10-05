@@ -1,0 +1,14 @@
+Sidearms active=True
+PASS stored CE weapon uses equip-first workflow
+PASS equipped CE weapon candidate
+PASS medicine excluded
+PASS no duplicate candidates
+PASS damaged equipped weapon work admission
+PASS durability threshold enforced
+PASS bench item filter enforced
+PASS ingredient filter enforced
+PASS real job targets equipped CE weapon
+JobFailReason=No worn items meet the mending conditions filter=True reserveBench=True reserveSteel=True cost=(Steel, 15)
+PASS actual repair completed
+PASS repair retained equipped and stored weapons
+PASS actual material consumption matches job cost

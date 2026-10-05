@@ -26,7 +26,7 @@ Access via Options → Mod Settings → Mend Yourself:
 
 ## Compatibility
 
-See the maintained [English compatibility list](Docs/compatibility/README.md) or [简体中文兼容性清单](Docs/compatibility/README.zh-CN.md) for Simple Mending, Simple Sidearms, Simpler Sidearms and Rules of Engagement support, usage and validation.
+See the maintained [English compatibility list](Docs/compatibility/README.md) or [简体中文兼容性清单](Docs/compatibility/README.zh-CN.md) for combat, sidearm and equipment repair-cost support.
 
 ## Building
 
