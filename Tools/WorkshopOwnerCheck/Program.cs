@@ -76,6 +76,7 @@ static async Task<int> Run(string[] args)
 
 static async Task UpdateCompatibilityLinks(PublishedFile service, ulong owner, string directory)
 {
+    const string title = "Simple Mending Yourself";
     var entries = new List<(int Language, string Code, string Text, PublishedFileDetails Before)>();
     foreach (var (code, language) in new[] { ("en", 0), ("zh-CN", 6) })
     {
@@ -91,25 +92,25 @@ static async Task UpdateCompatibilityLinks(PublishedFile service, ulong owner, s
     }
     foreach (var (language, code, text, before) in entries)
     {
-        if (Normalize(before.file_description) != Normalize(text))
+        if (Normalize(before.file_description) != Normalize(text) || before.title != title)
         {
             var request = new CPublishedFile_Update_Request
-            { appid = 294100, publishedfileid = 3671535921UL, language = language, file_description = text, title = before.title, visibility = before.visibility };
+            { appid = 294100, publishedfileid = 3671535921UL, language = language, file_description = text, title = title, visibility = before.visibility };
             request.tags.AddRange(before.tags.Select(t => t.tag));
             var response = await service.Update(request);
             if (response.Result != EResult.OK) throw new ControlledException($"Description update rejected: {code}, {response.Result}.");
         }
         var after = await ReadDescription(service, language, owner);
-        for (var attempt = 0; Normalize(after.file_description) != Normalize(text) && attempt < 4; attempt++)
+        for (var attempt = 0; (Normalize(after.file_description) != Normalize(text) || after.title != title) && attempt < 4; attempt++)
         {
             await Task.Delay(2000);
             after = await ReadDescription(service, language, owner);
         }
         if (after.language != language || Normalize(after.file_description) != Normalize(text) ||
-            after.title != before.title || after.visibility != before.visibility ||
+            after.title != title || after.visibility != before.visibility ||
             !after.tags.Select(t => t.tag).Order().SequenceEqual(before.tags.Select(t => t.tag).Order()))
             throw new ControlledException($"Post-update description verification failed: {code}.");
-        Console.WriteLine($"PASS: {code} Workshop description contains both compatibility links; title, visibility and tags preserved.");
+        Console.WriteLine($"PASS: {code} Workshop title is Simple Mending Yourself; localized description and both compatibility links verified; visibility and tags preserved.");
     }
 }
 

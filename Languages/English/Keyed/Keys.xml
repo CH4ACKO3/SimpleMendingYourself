@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 	<!-- Mod name -->
-	<SMY_ModName>Mend Yourself</SMY_ModName>
+	<SMY_ModName>Simple Mending Yourself</SMY_ModName>
 
 	<!-- Mod settings -->
 	<SMY_UpperThreshold>Upper HP threshold: {0} (items above this HP% will not be mended)</SMY_UpperThreshold>

@@ -1,4 +1,4 @@
-name: Update Workshop compatibility links
+name: Update Workshop titles and compatibility links
 on:
   workflow_dispatch:
 permissions:
@@ -24,7 +24,7 @@ jobs:
         run: |
           dotnet publish Tools/WorkshopOwnerCheck/WorkshopOwnerCheck.csproj -c Release -warnaserror -o artifacts/description-publisher
           if ($LASTEXITCODE) { throw 'Description updater build failed.' }
-      - name: Add and verify bilingual compatibility links
+      - name: Update and verify localized titles and compatibility links
         shell: pwsh
         env:
           STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
