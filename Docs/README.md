@@ -2,6 +2,6 @@
 
 Player-facing compatibility lists: [English](compatibility/README.md) · [简体中文](compatibility/README.zh-CN.md).
 
-Use these fixed files for future compatibility updates. Update both languages in the same commit. Each entry should name the mod, link its Workshop item, describe the supported behavior and usage conditions, and link the relevant review or game-test record. State validation coverage explicitly.
+Maintain these fixed files together in the same commit. Each mod entry includes a direct Workshop link and one or two sentences describing supported behavior and relevant usage conditions.
 
-Write descriptions around supported actions, settings and workflows. Prefer direct positive statements, including an actionable workflow when support depends on how equipment is held or configured. Keep implementation details and extended evidence in development records.
+Use direct positive descriptions of actions, settings and workflows. Keep test coverage, implementation details and evidence in development records.
