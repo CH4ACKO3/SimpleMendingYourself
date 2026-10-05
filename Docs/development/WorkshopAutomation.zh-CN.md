@@ -4,6 +4,8 @@
 
 构建会匿名下载 Simple Mending 条目 `3657705987` 的 1.6 DLL，并验证固定的 SHA-256。上游 DLL 变化会使构建停止，必须先检查兼容性再更新校验值。
 
+工坊介绍里的双语兼容清单链接由 `Docs/workshop/CompatibilityLinks.*.bbcode` 维护。在 `main` 上手动运行 `Update Workshop compatibility links`，使用现有 `steam-workshop` 凭证追加链接，并读取两个语言版本验证结果。该流程保留已有介绍、标题、可见性与标签，重复运行会复用已有链接段落。
+
 ## 首次配置
 
 1. 在 GitHub 仓库 Settings → Environments 创建 `steam-workshop`。
