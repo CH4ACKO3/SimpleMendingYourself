@@ -95,6 +95,8 @@ try {
         if (!$publishedVerified -and $attempt -lt 3) {Start-Sleep -Seconds 5}
     }
     if (!$publishedVerified) {throw 'SteamCMD completed, but the published files did not match the release manifest after three checks.'}
+    dotnet $checker update-compatibility-links (Join-Path $PSScriptRoot '../../Docs/workshop')
+    if ($LASTEXITCODE) {throw 'Workshop files uploaded, but localized description or supported-version tag verification failed.'}
     Write-Host "Steam confirmed Workshop item 3671535921 for $($m.tag)."
 } finally {
     if ($steam.StartsWith([IO.Path]::GetTempPath(),[StringComparison]::OrdinalIgnoreCase) -and

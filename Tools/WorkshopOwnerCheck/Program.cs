@@ -1,4 +1,5 @@
 using System.Text;
+using System.Xml.Linq;
 using SteamKit2;
 using SteamKit2.Authentication;
 using SteamKit2.Internal;
@@ -77,6 +78,8 @@ static async Task<int> Run(string[] args)
 static async Task UpdateCompatibilityLinks(PublishedFile service, ulong owner, string directory)
 {
     const string title = "Simple Mending Yourself";
+    var versions = XDocument.Load(Path.Combine(directory, "../../About/About.xml"))
+        .Root!.Element("supportedVersions")!.Elements("li").Select(e => e.Value).ToArray();
     var entries = new List<(int Language, string Code, string Text, PublishedFileDetails Before)>();
     foreach (var (code, language) in new[] { ("en", 0), ("zh-CN", 6) })
     {
@@ -87,30 +90,36 @@ static async Task UpdateCompatibilityLinks(PublishedFile service, ulong owner, s
         var before = await ReadDescription(service, language, owner);
         var text = before.file_description.Contains(snippet, StringComparison.Ordinal)
             ? before.file_description : before.file_description.TrimEnd() + "\n\n" + snippet;
+        var support = language == 0 ? $"Supports RimWorld {string.Join(" and ", versions)}."
+            : $"支持 RimWorld {string.Join(" 和 ", versions)}。";
+        if (!text.Contains(support, StringComparison.Ordinal)) text = support + "\n\n" + text;
         if (Encoding.UTF8.GetByteCount(text) >= 8000) throw new ControlledException($"Description is too long: {code}.");
         entries.Add((language, code, text, before));
     }
     foreach (var (language, code, text, before) in entries)
     {
-        if (Normalize(before.file_description) != Normalize(text) || before.title != title)
+        var tags = before.tags.Select(t => t.tag).Concat(versions).Distinct().Order().ToArray();
+        if (Normalize(before.file_description) != Normalize(text) || before.title != title ||
+            !before.tags.Select(t => t.tag).Order().SequenceEqual(tags))
         {
             var request = new CPublishedFile_Update_Request
             { appid = 294100, publishedfileid = 3671535921UL, language = language, file_description = text, title = title, visibility = before.visibility };
-            request.tags.AddRange(before.tags.Select(t => t.tag));
+            request.tags.AddRange(tags);
             var response = await service.Update(request);
             if (response.Result != EResult.OK) throw new ControlledException($"Description update rejected: {code}, {response.Result}.");
         }
         var after = await ReadDescription(service, language, owner);
-        for (var attempt = 0; (Normalize(after.file_description) != Normalize(text) || after.title != title) && attempt < 4; attempt++)
+        for (var attempt = 0; (Normalize(after.file_description) != Normalize(text) || after.title != title ||
+            !after.tags.Select(t => t.tag).Order().SequenceEqual(tags)) && attempt < 4; attempt++)
         {
             await Task.Delay(2000);
             after = await ReadDescription(service, language, owner);
         }
         if (after.language != language || Normalize(after.file_description) != Normalize(text) ||
             after.title != title || after.visibility != before.visibility ||
-            !after.tags.Select(t => t.tag).Order().SequenceEqual(before.tags.Select(t => t.tag).Order()))
+            !after.tags.Select(t => t.tag).Order().SequenceEqual(tags))
             throw new ControlledException($"Post-update description verification failed: {code}.");
-        Console.WriteLine($"PASS: {code} Workshop title is Simple Mending Yourself; localized description and both compatibility links verified; visibility and tags preserved.");
+        Console.WriteLine($"PASS: {code} Workshop title, localized description, compatibility links and supported-version tags verified; visibility preserved.");
     }
 }
 

@@ -1,6 +1,6 @@
 # Simple Mending Yourself
 
-A RimWorld 1.6 addon for [Simple Mending](https://steamcommunity.com/sharedfiles/filedetails/?id=3657705987) that lets pawns repair their own worn apparel and equipped weapons at a mending bench.
+A RimWorld 1.6 / 1.7 addon for [Simple Mending](https://steamcommunity.com/sharedfiles/filedetails/?id=3657705987) that lets pawns repair their own worn apparel and equipped weapons at a mending bench.
 
 ## How It Works
 
@@ -21,7 +21,7 @@ Access via Options → Mod Settings → Mend Yourself:
 
 ## Requirements
 
-- RimWorld 1.6
+- RimWorld 1.6 / 1.7
 - [Simple Mending](https://steamcommunity.com/sharedfiles/filedetails/?id=3657705987)
 
 ## Compatibility
